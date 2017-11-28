@@ -43,7 +43,6 @@ function update(data, message) {
 
 async function attach(ssb, data) {
   data.me = await ssb.whoami()
-
   pull(
     ssb.createUserStream({id: data.me.id, live: true}),
     pull.drain(message => update(data, message)))
@@ -59,7 +58,6 @@ export default {
     }
 
     attach(this.$ssb, dat)
-
     return dat
   }
 }
@@ -70,32 +68,17 @@ export default {
 h1, h2 {
   font-weight: normal;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
 a {
   color: #42b983;
 }
-
-.posts {
-
-}
-
 .post {
   margin-bottom: 30px;
   overflow-wrap: break-word;
   text-align: left;
   clear: both;
 }
-
 .prof {
   width: 200px;
   height: 200px;
-
 }
 </style>
