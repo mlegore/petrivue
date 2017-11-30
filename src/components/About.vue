@@ -3,7 +3,6 @@
     <img class="prof" v-if="about.image" :src="'ssb-blob://' + about.image" />
     <h1 v-if="about.name">Hello {{about.name}}!</h1>
     <h1 v-else>Hello!</h1>
-
     <div class="posts" v-for="post in posts">
       <div class="post">
         {{post}}
@@ -54,6 +53,7 @@ export default {
     var dat = {
       posts: [],
       about: {},
+      value: null,
       me: null
     }
 

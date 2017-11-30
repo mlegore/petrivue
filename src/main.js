@@ -5,11 +5,13 @@ import App from './App'
 import SSB from './ssb'
 import router from './router'
 import VueAsyncData from 'vue-async-data'
+var about = require('ssb-about')
 
 Vue.config.productionTip = false
 Vue.use(VueAsyncData)
 
 frameworkLoader.load('ssb').then(function(sbot) {
+  sbot.use(about)
   Vue.use(SSB, {ssb: sbot})
 
   /* eslint-disable no-new */
