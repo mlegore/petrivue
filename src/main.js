@@ -5,14 +5,15 @@ import App from './App'
 import SSB from './ssb'
 import router from './router'
 import VueAsyncData from 'vue-async-data'
-var about = require('ssb-about')
+import about from 'ssb-about'
 
 Vue.config.productionTip = false
 Vue.use(VueAsyncData)
 
-frameworkLoader.load('ssb').then(function(sbot) {
+frameworkLoader.load('ssb').then(async function(sbot) {
   sbot.use(about)
   Vue.use(SSB, {ssb: sbot})
+  await sbot.requestPublishPermission('post')
 
   /* eslint-disable no-new */
   new Vue({

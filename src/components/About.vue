@@ -3,9 +3,14 @@
     <img class="prof" v-if="about.image" :src="'ssb-blob://' + about.image" />
     <h1 v-if="about.name">Hello {{about.name}}!</h1>
     <h1 v-else>Hello!</h1>
+    <form v-on:submit.prevent="send">
+      <textarea v-model="message">
+      </textarea>
+      <button type="submit">Send message</button>
+    </form>
     <div class="posts" v-for="post in posts">
-      <div class="post">
-        {{post}}
+      <div class="post" :title="post.raw">
+        {{post.text}}
       </div>
     </div>
   </div>
@@ -19,7 +24,7 @@ function update(data, message) {
   if(message.value && message.value.content) {
     switch(message.value.content.type) {
       case 'post':
-        data.posts.push(message.value.content.text)
+        data.posts.push({ text: message.value.content.text, raw: JSON.stringify(message) })
         break
       case 'about':
         if(message.value.content.about === data.me.id) {
@@ -32,11 +37,11 @@ function update(data, message) {
       case 'vote':
         break
       default:
-        data.posts.push(JSON.stringify(message))
+        data.posts.push({ text: JSON.stringify(message) })
         break
     }
   } else {
-    data.posts.push(JSON.stringify(message))
+    data.posts.push({ text: JSON.stringify(message) })
   }
 }
 
@@ -54,11 +59,25 @@ export default {
       posts: [],
       about: {},
       value: null,
-      me: null
+      me: null,
+      message: ''
     }
 
     attach(this.$ssb, dat)
     return dat
+  },
+  methods: {
+    send () {
+      var msg = { channel: "TEST", type: 'post', text: this.message }
+
+      var cb = (err, val) => {
+        if (err)
+          console.error(err)
+        console.log(val)
+      }
+
+      this.$ssb.publish(msg, cb)
+    }
   }
 }
 </script>
@@ -80,5 +99,9 @@ a {
 .prof {
   width: 200px;
   height: 200px;
+}
+
+textarea {
+  width: 100%;
 }
 </style>
