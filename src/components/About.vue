@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <img class="prof" v-if="about.image" :src="'ssb-blob://' + about.image" />
+    <img class="prof" v-if="about.image" :src="'ssb-blob://' + encodeURIComponent(about.image)" />
     <h1 v-if="about.name">Hello {{about.name}}!</h1>
     <h1 v-else>Hello!</h1>
     <form v-on:submit.prevent="send">
