@@ -5,13 +5,21 @@ import App from './App'
 import SSB from './ssb'
 import router from './router'
 import VueAsyncData from 'vue-async-data'
-import about from 'ssb-about'
+import {pullWorker} from 'ssb-afterparty/channels/worker'
+import {pipeIn, pipeOut} from 'ssb-afterparty/connect'
+import Worker from 'worker-loader!./sbot.worker.js';
 
 Vue.config.productionTip = false
 Vue.use(VueAsyncData)
 
 frameworkLoader.load('ssb').then(async function(sbot) {
-  sbot.use(about)
+
+
+  var worker = new Worker()
+  var toPipe = pullWorker(worker, 'toPipe')
+  var fromPipe = pullWorker(worker, 'fromPipe')
+  pipeOut(sbot, sbot.manifest, toPipe)
+  sbot = await pipeIn(sbot, fromPipe)
   Vue.use(SSB, {ssb: sbot})
   await sbot.requestPublishPermission('post')
 
