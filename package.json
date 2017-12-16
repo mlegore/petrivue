@@ -10,11 +10,16 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "ndjson": "^1.5.0",
     "pull-stream": "^3.6.1",
     "ssb-about": "^0.1.1",
+    "ssb-afterparty": "0.0.1",
+    "stream-http": "^2.7.2",
+    "stream-to-pull-stream": "^1.7.2",
     "vue": "^2.5.2",
     "vue-async-data": "^1.0.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "workerstream-channel": "0.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
