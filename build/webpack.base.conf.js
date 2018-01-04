@@ -27,6 +27,7 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      'flumeview-reduce': 'flumeview-reduce-browser'
     }
   },
   module: {
